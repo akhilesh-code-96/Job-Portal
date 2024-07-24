@@ -29,7 +29,7 @@ function Navbar({ className }: { className?: string }) {
             <Link to="/job-search" className="text-white">
               Find Jobs
             </Link>
-            <Link to="/post-jobs" className="text-white">
+            <Link to="/job-post" className="text-white">
               Post Jobs
             </Link>
           </div>

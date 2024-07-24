@@ -14,6 +14,7 @@ const JobPostForm = () => {
     companyDescription: "",
     jobDescription: "",
     category: "frontend",
+    location: "",
   });
   const [image, setImage] = useState<File | null>(null);
 
@@ -91,6 +92,18 @@ const JobPostForm = () => {
               placeholder="Position"
               type="text"
               value={job.position}
+              onChange={handleChange}
+              required
+            />
+          </LabelInputContainer>
+
+          <LabelInputContainer className="mb-4">
+            <Label htmlFor="location">Job Location</Label>
+            <Input
+              id="location"
+              placeholder="city, state"
+              type="text"
+              value={job.location}
               onChange={handleChange}
               required
             />

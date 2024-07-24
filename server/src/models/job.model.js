@@ -8,6 +8,7 @@ const jobSchema = mongoose.Schema(
     company_description: { type: String, required: true },
     job_description: { type: String, required: true },
     category: { type: String, required: true },
+    location: { type: String, required: true },
   },
   { timestamps: true }
 );

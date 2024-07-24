@@ -7,18 +7,23 @@ const JobSearch = () => {
     location: "",
   });
 
+  const [matchedJobs, setMatchedJobs] = useState([]);
+
   useEffect(() => {
     getJobs();
   }, []);
 
   async function getJobs() {
     try {
-      const reponse = await axios.get("/api/get-jobs", {
+      const response = await axios.get("/api/get-jobs", {
         params: {
           job: input.job,
           location: input.location,
         },
       });
+      const jobs = response.data.jobs;
+      console.log(jobs);
+      setMatchedJobs(jobs);
       setInput({
         job: "",
         location: "",
@@ -90,28 +95,24 @@ const JobSearch = () => {
         </div>
 
         {/* Job Listings */}
-        {/* <div className="space-y-4">
-          {Array(5)
-            .fill("")
-            .map((_, index) => (
-              <div
-                key={index}
-                className="p-4 border border-gray-800 bg-gray-800 rounded hover:bg-gray-700"
-              >
-                <h3 className="text-xl font-bold">Frontend Developer</h3>
-                <p className="text-gray-400">Company Name - Location</p>
-                <p className="mt-2">Short description of the job...</p>
-                <div className="mt-2 flex justify-between items-center">
-                  <span className="text-sm text-gray-400">
-                    Posted 2 days ago
-                  </span>
-                  <button className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700">
-                    Apply Now
-                  </button>
-                </div>
+        <div className="space-y-4">
+          {matchedJobs.map((job, index) => (
+            <div
+              key={index}
+              className="p-4 border border-gray-800 bg-gray-800 rounded hover:bg-gray-700"
+            >
+              <h3 className="text-xl font-bold">{job.position}</h3>
+              <p className="text-gray-400">{job.location}</p>
+              <p className="mt-2">{job.job_description}</p>
+              <div className="mt-2 flex justify-between items-center">
+                <span className="text-sm text-gray-400">Posted {job.updatedAt}</span>
+                <button className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700">
+                  Apply Now
+                </button>
               </div>
-            ))}
-        </div> */}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

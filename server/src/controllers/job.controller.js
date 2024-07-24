@@ -5,17 +5,19 @@ export default class JobController {
   async getJobs(req, res) {
     const { job, location } = req.query;
     if (job && location) {
-      console.log(`Job: ${job}, Location: ${location}`);
-    }
-    try {
-      res.status(200).json({ message: "Successfully send the job data." });
-    } catch (error) {
-      res.status(401).json({ message: "Data not found." });
+      console.log(job);
+      try {
+        console.log("I am here");
+        const jobs = await JobModel.find({ position: job, location: location });
+        res.status(200).json({ jobs });
+      } catch (error) {
+        res.status(401).json({ message: "Data not found." });
+      }
     }
   }
 
   async postJobs(req, res) {
-    const { companyName, position, companyDescription, jobDescription, category } =
+    const { companyName, position, companyDescription, jobDescription, category, location } =
       req.body;
     const imagePath = req.file.path;
     try {
@@ -29,6 +31,7 @@ export default class JobController {
         company_description: companyDescription,
         job_description: jobDescription,
         category: category,
+        location: location,
       });
 
       await record.save();

@@ -7,6 +7,7 @@ import { backendJobs } from "./Backend";
 import { frontendJobs } from "./Frontend";
 import JobList from "./components/JobList";
 import JobDisplayPage from "./components/JobDisplay-Page";
+import JobSearch from "./JobSearch";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/frontend-jobs" element={<JobList jobArray={frontendJobs} />} />
         <Route path="/frontend-jobs/:id" element={<JobDisplayPage />} />
         <Route path="/backend-jobs/:id" element={<JobDisplayPage />} />
+        <Route path="/job-search" element={<JobSearch />} />
       </Routes>
     </Router>
   );

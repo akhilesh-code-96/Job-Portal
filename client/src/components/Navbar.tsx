@@ -26,11 +26,11 @@ function Navbar({ className }: { className?: string }) {
       <Menu setActive={setActive}>
         <MenuItem setActive={setActive} active={active} item="Jobs">
           <div className="flex flex-col space-y-4 text-sm">
-            <Link to="/find-jobs">
-              <HoveredLink>Find Jobs</HoveredLink>
+            <Link to="/job-search" className="text-white">
+              Find Jobs
             </Link>
-            <Link to="post-jobs">
-              <HoveredLink>Post Jobs</HoveredLink>
+            <Link to="/post-jobs" className="text-white">
+              Post Jobs
             </Link>
           </div>
         </MenuItem>

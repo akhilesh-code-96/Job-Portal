@@ -19,10 +19,10 @@ export default class UserController {
         .json({ message: "Failed to register the user with error: ", error });
     }
   }
-  authUser(req, res) {
+  async authUser(req, res) {
     const { email, password } = req.body;
     try {
-      const user = await.UserModel.findOne({ email });
+      const user = await UserModel.findOne({ email });
       if (user) {
         if (password === user.password) {
           res.status(200).json({ user });

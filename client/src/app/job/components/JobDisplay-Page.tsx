@@ -1,11 +1,12 @@
 import React from "react";
+import { JobsInterface } from "../../../models/types";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const JobDisplayPage = () => {
   const location = useLocation();
   const user = window.localStorage.getItem("User");
   const navigate = useNavigate();
-  const job = location.state?.job;
+  const job: JobsInterface = location.state?.job;
   console.log(job);
 
   const handleClick = () => {

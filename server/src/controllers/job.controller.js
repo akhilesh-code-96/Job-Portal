@@ -3,12 +3,31 @@ import uploadImageToCloudinary from "../utils/cloudinary.js";
 
 export default class JobController {
   async getJobs(req, res) {
-    const { job, location } = req.query;
+    const { job, location, category } = req.query;
+
+    const queryObject = {}; // universal query object
+
+    if (category) {
+      queryObject.category = category;
+    }
+
     if (job && location) {
-      console.log(job);
+      // regex would be able to find the word even if it's in the middle of a sentence
+      queryObject.$and = [];
+      if (job.trim() !== "") {
+        queryObject.$and.push({ position: { $regex: job, $options: "i" } });
+      }
+      if (location.trim() !== "") {
+        queryObject.$and.push({
+          location: { $regex: location, $options: "i" },
+        });
+      }
+    }
+
+    // sending the response
+    if (Object.keys(queryObject).length > 0) {
       try {
-        console.log("I am here");
-        const jobs = await JobModel.find({ position: job, location: location });
+        const jobs = await JobModel.find(queryObject);
         res.status(200).json({ jobs });
       } catch (error) {
         res.status(401).json({ message: "Data not found." });
@@ -17,8 +36,14 @@ export default class JobController {
   }
 
   async postJobs(req, res) {
-    const { companyName, position, companyDescription, jobDescription, category, location } =
-      req.body;
+    const {
+      companyName,
+      position,
+      companyDescription,
+      jobDescription,
+      category,
+      location,
+    } = req.body;
     const imagePath = req.file.path;
     try {
       const uploadResult = await uploadImageToCloudinary(imagePath);

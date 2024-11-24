@@ -1,15 +1,15 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Label } from "../components/ui/label";
-import { Input } from "../components/ui/input";
-import { cn } from "../utils/cn";
+import { Label } from "../../../components/ui/label";
+import { Input } from "../../../components/ui/input";
+import { cn } from "../../../utils/cn";
 import {
   IconBrandGithub,
   IconBrandGoogle,
   IconBrandOnlyfans,
 } from "@tabler/icons-react";
 import axios from "axios";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -24,8 +24,8 @@ export default function Register() {
     e.preventDefault();
     try {
       await axios.post("/api/register-user", input, {
-        headers: {"Content-type": "application/json"}
-      })
+        headers: { "Content-type": "application/json" },
+      });
       navigate("/jobseeker-login");
     } catch (error) {
       console.error("Failed to register the user: ", error);

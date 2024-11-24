@@ -1,34 +1,37 @@
 import React from "react";
-import Pagination from "./Pagination";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import Pagination from "../../../components/Pagination";
+import { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { JobsInterface } from "../../../models/types";
+import { useFetchJobs } from "../custom";
 
-interface JobListProps {
-  jobArray: string[];
-}
-
-const JobList: React.FC<JobListProps> = ({ jobArray })=> {
+const JobList = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const jobsPerPage = 10;
+  const location = useLocation();
+  console.log("location", location);
+  const { jobs, loading, error } = useFetchJobs(location.pathname);
+  const [jobArray, setJobArray] = useState<JobsInterface[]>([]);
+
+  useEffect(() => {
+    setJobArray(jobs);
+  }, [location, jobs]);
 
   // Mock pagination logic
   const indexOfLastJob = currentPage * jobsPerPage;
   const indexOfFirstJob = indexOfLastJob - jobsPerPage;
-  const currentJobs = jobArray.slice(indexOfFirstJob, indexOfLastJob);
+  const currentJobs: JobsInterface[] = jobArray.slice(
+    indexOfFirstJob,
+    indexOfLastJob
+  );
 
   // useNavigate hook
   const navigate = useNavigate();
-  console.log(jobArray);
+  console.log("Job array", jobArray);
 
   // Handle job click
-  const handleJobClick = (job: {
-    id: any;
-    position?: string;
-    company?: string;
-    companyLogo?: string;
-    job_description?: string[];
-  }) => {
-    navigate(`/backend-jobs/${job.id}`, { state: { job } });
+  const handleJobClick = (job: JobsInterface) => {
+    navigate(`${location.pathname}/${job.job_id}`, { state: { job } });
   };
 
   // Mock paginate function
@@ -40,7 +43,7 @@ const JobList: React.FC<JobListProps> = ({ jobArray })=> {
       <div className="mt-[100px] max-w-4xl w-full p-6">
         {currentJobs.map((job) => (
           <div
-            key={job.id}
+            key={job.job_id}
             className="mb-6 p-6 bg-gray-800 text-white rounded-lg shadow-lg transform transition duration-500 hover:scale-105 hover:shadow-xl cursor-pointer"
             onClick={() => handleJobClick(job)}
           >

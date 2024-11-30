@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { NavbarDemo } from "./components/Navbar";
-import { GridBackgroundDemo } from "./components/Grid-Background";
+import { Home } from "./app/home/components/Home";
 import Login from "./app/user/components/Login-Page";
 import Register from "./app/user/components/Register";
 import JobList from "./app/job/components/JobList";
@@ -43,7 +43,7 @@ function App() {
       />
       <NavbarDemo />
       <Routes>
-        <Route path="/" element={<GridBackgroundDemo />} />
+        <Route path="/" element={<Home />} />
         <Route
           path="/jobseeker-login"
           element={<Login name="Job Seeker's" />}

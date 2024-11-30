@@ -30,6 +30,8 @@ export default class UserController {
       if (user) {
         if (password === user.password) {
           res.status(200).json({ user });
+        } else {
+          res.status(401).json({ message: "Invalid credentials." });
         }
       }
     } catch (error) {

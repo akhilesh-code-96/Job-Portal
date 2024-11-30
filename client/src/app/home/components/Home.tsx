@@ -1,14 +1,14 @@
-import React from "react";
-import FlipWordsComponent from "./FlipWords";
-import AnimatedTooltipPreview from "./Tooltip";
-import MovingBorderButton from "./MovingBorderButton";
-import MovingBorderButton1 from "./MovingBorderButton1";
-import { Link } from "react-router-dom";
-import { HeroHighlightDemo } from "./Hero-Section";
-import { Spotlight } from "./ui/Spotlight";
-import DirectionAwareHoverPreview from "./DirectionAware";
+import React, { useState } from "react";
+import FlipWordsComponent from "../../../components/FlipWords";
+import AnimatedTooltipPreview from "../../../components/Tooltip";
+import MovingBorderButton from "../../../components/MovingBorderButton";
+import MovingBorderButton1 from "../../../components/MovingBorderButton1";
+import { HeroHighlightDemo } from "../../../components/Hero-Section";
+import { Spotlight } from "../../../components/ui/Spotlight";
 
-export function GridBackgroundDemo() {
+export function Home() {
+  const role = window.localStorage.getItem("role");
+
   return (
     <>
       <div
@@ -19,7 +19,7 @@ export function GridBackgroundDemo() {
         <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-black bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_30%,black)]"></div>
 
         <div>
-        <Spotlight />
+          <Spotlight />
         </div>
         {/* FlipWordsComponent */}
         <div className="absolute top-[-9px] left-4 ml-4">
@@ -28,12 +28,25 @@ export function GridBackgroundDemo() {
             <AnimatedTooltipPreview />
           </div>
           <div className=" flex absolute top-[500px] left-4 space-x-3">
-            <Link to="/jobseeker-login">
-              <MovingBorderButton name="Job Seeker's Login" />
-            </Link>
-            <Link to="/recruiter-login">
-              <MovingBorderButton1 name="Recruiter's Login" />
-            </Link>
+            {!role ? (
+              <>
+                <MovingBorderButton name="Job Seeker's Login" />
+                <MovingBorderButton1 name="Recruiter's Login" />
+              </>
+            ) : (
+              <>
+                {role === "Job Seeker" && (
+                  <MovingBorderButton
+                    name={role ? "Logout" : "Job Seeker's Login"}
+                  />
+                )}
+                {role === "Recruiter" && (
+                  <MovingBorderButton1
+                    name={role ? "Logout" : "Recruiter's Login"}
+                  />
+                )}
+              </>
+            )}
           </div>
         </div>
 

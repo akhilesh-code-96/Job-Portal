@@ -16,6 +16,7 @@ const JobSearch = () => {
   }, []);
 
   const navigate = useNavigate();
+  const userId = window.localStorage.getItem("userId");
 
   async function getJobs() {
     try {
@@ -55,7 +56,10 @@ const JobSearch = () => {
   };
 
   const handleJobApply = (job_id: string) => {
-    navigate("/job-application", { state: { job_id } });
+    if (userId) {
+      navigate("/job-application", { state: { job_id } });
+    }
+    navigate("/jobseeker-login");
   };
 
   return (

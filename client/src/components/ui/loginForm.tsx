@@ -1,11 +1,11 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { cn } from "../../utils/cn";
 import { IconBrandGithub, IconBrandGoogle } from "@tabler/icons-react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import toast from "react-hot-toast";
 
 export function LoginForm({ name }) {
@@ -14,27 +14,58 @@ export function LoginForm({ name }) {
     password: "",
   });
   const navigate = useNavigate();
+  const location = useLocation();
+  const pathname = location.pathname;
   const handleChange = (e: { target: { id: string | number; value: any } }) => {
     const newData = { ...input };
     newData[e.target.id] = e.target.value;
     setInput(newData);
   };
 
+  const setUserCredsToLocalStorage = (
+    user: string,
+    role: string,
+    id: string
+  ): string => {
+    window.localStorage.setItem("user", user);
+    window.localStorage.setItem("role", role);
+    window.localStorage.setItem("userId", id);
+
+    return "User added!";
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await axios.post("/api/auth-user", input);
+      const response = await axios.post("/api/auth-user", {
+        ...input,
+        pathname,
+      });
       if (response.status === 200) {
         const user = response.data.user;
-        window.localStorage.setItem("User", user);
+        setUserCredsToLocalStorage(user.firstname, user.role, user._id);
         toast.success("Successfully logged in.");
-        navigate("/job-search");
+        if (user.role === "Recruiter") {
+          navigate("/");
+        } else {
+          navigate("/job-search");
+        }
       }
     } catch (error) {
       toast.error("Invalid credentials.");
       console.error("Failed to fetch the user data with error: ", error);
     }
   };
+
+  useEffect(() => {
+    if (
+      window.localStorage.getItem("user") &&
+      (location.pathname === "/recruiter-login" ||
+        location.pathname === "/jobseeker-login")
+    ) {
+      navigate("/");
+    }
+  }, []);
 
   return (
     <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black">

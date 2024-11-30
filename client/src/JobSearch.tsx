@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { MatchedJobInterface } from "./models/types";
+import { JobsInterface } from "./models/types";
 import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 
 const JobSearch = () => {
   const [input, setInput] = useState({
@@ -8,11 +9,13 @@ const JobSearch = () => {
     location: "",
   });
 
-  const [matchedJobs, setMatchedJobs] = useState<MatchedJobInterface[]>([]);
+  const [matchedJobs, setMatchedJobs] = useState<JobsInterface[]>([]);
 
   useEffect(() => {
     getJobs();
   }, []);
+
+  const navigate = useNavigate();
 
   async function getJobs() {
     try {
@@ -46,12 +49,21 @@ const JobSearch = () => {
     }
   }
 
+  // Handle job click
+  const handleJobClick = (job: JobsInterface) => {
+    navigate(`/${job.category}-jobs/${job.job_id}`, { state: { job } });
+  };
+
+  const handleJobApply = (job_id: string) => {
+    navigate("/job-application", { state: { job_id } });
+  };
+
   return (
     <div className="min-h-screen w-full dark:bg-black bg-white dark:bg-grid-white/[0.06] bg-grid-black/[0.2] relative flex items-center justify-center">
       <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-black bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_80%,black)]"></div>
-      <div className="container mx-auto">
+      <div className="flex flex-col items-center mx-auto">
         {/* Search Bar */}
-        <div className="flex flex-col items-center py-4">
+        <div className="mt-[145px] py-4">
           <div className="flex flex-col md:flex-row items-center justify-center mb-6">
             <input
               type="text"
@@ -98,20 +110,28 @@ const JobSearch = () => {
         </div>
 
         {/* Job Listings */}
-        <div className="relative top-[300px] flex flex-col space-y-4">
+        <div className="flex flex-col items-center w-3/4 space-y-4 mb-16">
           {matchedJobs.map((job, index) => (
             <div
               key={index}
               className="p-4 border border-gray-800 bg-gray-800 rounded hover:bg-gray-700 cursor-pointer"
             >
-              <h3 className="text-xl font-bold">{job.position}</h3>
+              <h3
+                onClick={() => handleJobClick(job)}
+                className="text-xl font-bold text-white hover:underline"
+              >
+                {job.position}
+              </h3>
               <p className="text-gray-400">{job.location}</p>
-              <p className="mt-2">{job.job_description}</p>
+              <p className="mt-2 text-white">{job.job_description}</p>
               <div className="mt-2 flex justify-between items-center">
                 <span className="text-sm text-gray-400">
-                  Posted {job.updatedAt}
+                  Posted {job?.updatedAt}
                 </span>
-                <button className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700">
+                <button
+                  onClick={() => handleJobApply(job._id)}
+                  className="px-3 py-2 bg-blue-600 text-white text-sm rounded hover:bg-blue-700 shadow-lg"
+                >
                   Apply Now
                 </button>
               </div>

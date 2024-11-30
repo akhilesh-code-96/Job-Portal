@@ -24,13 +24,16 @@ function Navbar({ className }: { className?: string }) {
       className={cn("fixed top-10 inset-x-0 max-w-2xl mx-auto z-50", className)}
     >
       <Menu setActive={setActive}>
-        <MenuItem setActive={setActive} active={active} item="Jobs">
+        <Link to="/">
+          <div className="text-gray-50">Home</div>
+        </Link>
+        <MenuItem setActive={setActive} active={active} item="Job">
           <div className="flex flex-col space-y-4 text-sm">
             <Link to="/job-search" className="text-white">
-              Find Jobs
+              Find Job
             </Link>
             <Link to="/job-post" className="text-white">
-              Post Jobs
+              Post Job
             </Link>
           </div>
         </MenuItem>
@@ -48,18 +51,6 @@ function Navbar({ className }: { className?: string }) {
               src="https://verpex.com/assets/uploads/images/blog/How-to-become-a-Backend-Developer.jpg?v=1665484477"
               description="Production ready Tailwind css components for your next project"
             />
-            {/* <ProductItem
-              title="DeveOps Engineer"
-              href="/devops-jobs"
-              src="https://blog.brokee.io/content/images/2023/12/devopsvsdeveloper--1-.png"
-              description="Never write from scratch again. Go from idea to blog in minutes."
-            />
-            <ProductItem
-              title="Block-Chain Engineer"
-              href="/blockchain-jobs"
-              src="https://miro.medium.com/v2/resize:fit:1400/1*Y49s04yejf6CKcKnzueGLg.jpeg"
-              description="Respond to government RFPs, RFIs and RFQs 10x faster using AI"
-            /> */}
           </div>
         </MenuItem>
         <Link to="/register">

@@ -1,4 +1,5 @@
 import JobModel from "../models/job.model.js";
+import ApplicationModel from "../models/application.model.js";
 import uploadImageToCloudinary from "../utils/cloudinary.js";
 
 export default class JobController {
@@ -65,6 +66,37 @@ export default class JobController {
       res
         .status(501)
         .json({ message: "Failed to post the job with error: ", error });
+    }
+  }
+
+  async postApplication(req, res) {
+    const { application, user_id, job_id } = req.body;
+    console.log("File", req.file);
+    console.log("User id", user_id);
+    console.log("Job id", job_id);
+
+    const resumePath = req.file.path;
+    console.log("Path", resumePath);
+    try {
+      const uploadResult = await uploadImageToCloudinary(resumePath, true);
+      const resumeUrl = uploadResult.secure_url;
+      console.log("Secure url", resumeUrl);
+      const record = new ApplicationModel({
+        user_id: user_id,
+        job_id: job_id,
+        firstname: application.firstname,
+        lastname: application.lastname,
+        email: application.email,
+        resume: resumeUrl,
+      });
+      console.log();
+      await record.save();
+      res.status(200).json({ message: "Application submitted successfully." });
+    } catch (error) {
+      res.status(501).json({
+        message: "Failed to upload the application with error: ",
+        error,
+      });
     }
   }
 }

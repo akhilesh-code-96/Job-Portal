@@ -4,14 +4,14 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 const JobDisplayPage = () => {
   const location = useLocation();
-  const user = window.localStorage.getItem("User");
+  const userId = window.localStorage.getItem("userId");
   const navigate = useNavigate();
   const job: JobsInterface = location.state?.job;
   console.log(job);
 
-  const handleClick = () => {
-    if (user) {
-      navigate("/apply-jobs");
+  const handleClick = (job_id: string) => {
+    if (userId) {
+      navigate("/job-application", { state: { job_id } });
     } else {
       navigate("/jobseeker-login");
     }
@@ -67,7 +67,7 @@ const JobDisplayPage = () => {
         </ul>
         <div>
           <button
-            onClick={handleClick}
+            onClick={() => handleClick(job._id)}
             className="inline-flex h-12 animate-shimmer items-center justify-center rounded-md border border-slate-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-6 font-medium text-slate-400 transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50 mt-10"
           >
             Apply

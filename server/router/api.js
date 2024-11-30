@@ -16,5 +16,10 @@ router.post(
   uploadFile.single("companyLogo"),
   jobController.postJobs
 );
+router.post(
+  "/post-application",
+  uploadFile.single("resume"),
+  jobController.postApplication
+);
 
 export default router;

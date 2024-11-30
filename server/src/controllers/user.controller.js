@@ -3,6 +3,10 @@ import UserModel from "../models/user.model.js";
 export default class UserController {
   async registerUser(req, res) {
     const { firstname, lastname, email, password } = req.body;
+    const emailExists = await UserModel.findOne({ email });
+    if (UserModel.findOne({ email })) {
+      return res.status(401).json({ message: "User already exists!" });
+    }
     try {
       const record = new UserModel({
         firstName: firstname,

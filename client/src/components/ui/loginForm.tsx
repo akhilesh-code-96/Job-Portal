@@ -5,12 +5,15 @@ import { Input } from "../ui/input";
 import { cn } from "../../utils/cn";
 import { IconBrandGithub, IconBrandGoogle } from "@tabler/icons-react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 export function LoginForm({ name }) {
   const [input, setInput] = useState({
     email: "",
     password: "",
   });
+  const navigate = useNavigate();
   const handleChange = (e: { target: { id: string | number; value: any } }) => {
     const newData = { ...input };
     newData[e.target.id] = e.target.value;
@@ -20,12 +23,15 @@ export function LoginForm({ name }) {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await axios.post("/api/auth-user");
+      const response = await axios.post("/api/auth-user", input);
       if (response.status === 200) {
         const user = response.data.user;
         window.localStorage.setItem("User", user);
+        toast.success("Successfully logged in.");
+        navigate("/job-search");
       }
     } catch (error) {
+      toast.error("Invalid credentials.");
       console.error("Failed to fetch the user data with error: ", error);
     }
   };

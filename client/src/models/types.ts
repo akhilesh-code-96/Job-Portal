@@ -1,15 +1,17 @@
-export interface MatchedJobInterface {
-  position: string;
-  location: string;
-  job_description: string;
-  updatedAt: string;
-}
-
 export interface JobsInterface {
+  _id: string;
   job_id: string;
   position: string;
   company: string;
   companyLogo: string;
   company_description: string;
   job_description: string[];
+  category?: string;
+  location?: string;
+  updatedAt?: string;
+}
+
+export interface ResumeInterface {
+  name: string;
+  lastModified: Date;
 }

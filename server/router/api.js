@@ -10,6 +10,8 @@ const userController = new UserController();
 const jobController = new JobController();
 const applicationController = new ApplicationController();
 
+router.get("/", (req, res) => res.send("We are live!"));
+
 router.post("/register-user", userController.registerUser);
 router.post("/auth-user", userController.authUser);
 router.get("/get-jobs", jobController.getJobs);

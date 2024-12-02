@@ -15,7 +15,7 @@ app.use(
       "https://job-portal-frontend-brown.vercel.app",
       "http://localhost:5173",
     ],
-    methods: ["GET", "POST", "PUT", "DELETE"], // Specify allowed HTTP methods
+    methods: ["POST", "GET", "DELETE", "PUT"], // Specify allowed HTTP methods
     allowedHeaders: ["Content-Type", "Authorization"], // Specify allowed headers
   })
 );

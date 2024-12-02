@@ -16,6 +16,7 @@ app.use(
       "http://localhost:5173",
     ],
     methods: ["POST", "GET", "DELETE", "PUT"], // Specify allowed HTTP methods
+    credentials: true,
   })
 );
 

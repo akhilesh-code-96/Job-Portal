@@ -5,6 +5,7 @@ import { Label } from "./components/ui/label";
 import { Input } from "./components/ui/input";
 import { cn } from "./utils/cn";
 import axios from "axios";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const JobPostForm = () => {
   const navigate = useNavigate();
@@ -29,7 +30,7 @@ const JobPostForm = () => {
         formData.append(key, job[key]);
       });
 
-      axios.post("/api/post-job", formData, {
+      axios.post(`${BASE_URL}/api/post-job`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       navigate("/");

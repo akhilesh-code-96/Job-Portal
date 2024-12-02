@@ -7,6 +7,7 @@ import { IconBrandGithub, IconBrandGoogle } from "@tabler/icons-react";
 import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
 import toast from "react-hot-toast";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export function LoginForm({ name }) {
   const [input, setInput] = useState({
@@ -37,7 +38,7 @@ export function LoginForm({ name }) {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await axios.post("/api/auth-user", {
+      const response = await axios.post(`${BASE_URL}/api/auth-user`, {
         ...input,
         pathname,
       });

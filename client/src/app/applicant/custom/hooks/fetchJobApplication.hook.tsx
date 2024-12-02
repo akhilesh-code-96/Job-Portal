@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { JobAppInterface } from "../../../../models/types";
 import axios from "axios";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export const usefetchJobApplication = (job_id: string) => {
   const [jobApplication, setJobApplication] = useState<JobAppInterface[]>([]);
@@ -11,7 +12,7 @@ export const usefetchJobApplication = (job_id: string) => {
     const fetchJobApplication = async () => {
       try {
         const response = await axios.get(
-          `/api/get-job-application?job_id=${job_id}`
+          `${BASE_URL}/api/get-job-application?job_id=${job_id}`
         );
         const data = await response.data.applications;
         setJobApplication(data);

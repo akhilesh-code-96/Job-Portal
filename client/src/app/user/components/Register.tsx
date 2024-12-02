@@ -7,6 +7,7 @@ import { IconBrandGithub, IconBrandGoogle } from "@tabler/icons-react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export default function Register() {
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ export default function Register() {
     e.preventDefault();
     try {
       await axios.post(
-        "/api/register-user",
+        `${BASE_URL}/api/register-user`,
         { ...input, role: "Job Seeker" },
         {
           headers: { "Content-type": "application/json" },
@@ -42,9 +43,6 @@ export default function Register() {
     setInput(newData);
   };
 
-  useEffect(() => {
-    console.log(input);
-  }, [input]);
   return (
     <div className="h-auto w-full dark:bg-black bg-white dark:bg-grid-white/[0.1] bg-grid-black/[0.2] relative flex items-center justify-center">
       <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-black bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>

@@ -9,9 +9,10 @@ export const usefetchJobApplication = (job_id: string) => {
 
   useEffect(() => {
     const fetchJobApplication = async () => {
-      const baseURL = import.meta.env.VITE_API_BASE_URL;
       try {
-        const response = await axios.get(`${baseURL}?job_id=${job_id}`);
+        const response = await axios.get(
+          `/api/get-job-application?job_id=${job_id}`
+        );
         const data = await response.data.applications;
         setJobApplication(data);
         setLoading(false);

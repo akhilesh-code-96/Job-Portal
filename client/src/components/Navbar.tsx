@@ -1,13 +1,8 @@
 "use client";
-import React, { useState } from "react";
-import {
-  HoveredLink,
-  Menu,
-  MenuItem,
-  ProductItem,
-} from "../components/ui/navbar-menu.tsx";
+import React, { useState, useEffect } from "react";
+import { Menu, MenuItem, ProductItem } from "../components/ui/navbar-menu.tsx";
 import { cn } from "../utils/cn.ts";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 export function NavbarDemo() {
   return (
@@ -19,7 +14,19 @@ export function NavbarDemo() {
 
 function Navbar({ className }: { className?: string }) {
   const [active, setActive] = useState<string | null>(null);
+  const [activateRegister, setActivateRegister] = useState(true);
   const role = window.localStorage.getItem("role");
+  const user = window.localStorage.getItem("user");
+  const location = useLocation();
+
+  useEffect(() => {
+    if (user) {
+      setActivateRegister(false);
+    } else {
+      setActivateRegister(true);
+    }
+  }, [location.pathname]);
+
   return (
     <div
       className={cn("fixed top-10 inset-x-0 max-w-2xl mx-auto z-50", className)}
@@ -30,15 +37,17 @@ function Navbar({ className }: { className?: string }) {
         </Link>
         <MenuItem setActive={setActive} active={active} item="Job">
           <div className="flex flex-col space-y-4 text-sm">
-            {role === "Job Seeker" ||
-              (role === null && (
-                <Link to="/job-search" className="text-white">
-                  Find Job
-                </Link>
-              ))}
-            <Link to="/job-post" className="text-white">
-              Post Job
-            </Link>
+            {(role === "Job Seeker" || role === null) && (
+              <Link to="/job-search" className="text-white">
+                Find Job
+              </Link>
+            )}
+
+            {(role === "Recruiter" || role === null) && (
+              <Link to="/job-post" className="text-white">
+                Post Job
+              </Link>
+            )}
           </div>
         </MenuItem>
         <MenuItem setActive={setActive} active={active} item="Category">
@@ -57,9 +66,11 @@ function Navbar({ className }: { className?: string }) {
             />
           </div>
         </MenuItem>
-        <Link to="/register">
-          <div className="text-gray-50">Register</div>
-        </Link>
+        {activateRegister && (
+          <Link to="/register">
+            <div className="text-gray-50">Register</div>
+          </Link>
+        )}
       </Menu>
     </div>
   );

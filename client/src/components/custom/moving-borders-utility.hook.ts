@@ -1,10 +1,12 @@
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 export const useHandleNavigation = () => {
   const navigate = useNavigate();
 
   const handleNavigation = (name: string) => {
     if (name === "Logout") {
+      toast.success("See you back soon!");
       const role = window.localStorage.getItem("role");
       window.localStorage.removeItem("role");
       window.localStorage.removeItem("user");

@@ -15,3 +15,12 @@ export interface ResumeInterface {
   name: string;
   lastModified: Date;
 }
+
+export interface JobAppInterface {
+  job_id: string;
+  position: string;
+  firstname: string;
+  lastname: string;
+  email: string;
+  resume: string;
+}

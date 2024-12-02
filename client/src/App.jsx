@@ -8,6 +8,7 @@ import JobDisplayPage from "./app/job/components/JobDisplay-Page";
 import JobSearch from "./JobSearch";
 import JobPost from "./JobPost";
 import { JobApplication } from "./app/applicant/components/Job-Application";
+import { ApplicationsList } from "./app/applicant/components/Applications-List";
 import { Toaster } from "react-hot-toast";
 
 function App() {
@@ -57,6 +58,7 @@ function App() {
         <Route path="/job-search" element={<JobSearch />} />
         <Route path="/job-post" element={<JobPost />} />
         <Route path="/job-application" element={<JobApplication />} />
+        <Route path="/view-job-application" element={<ApplicationsList />} />
       </Routes>
     </Router>
   );

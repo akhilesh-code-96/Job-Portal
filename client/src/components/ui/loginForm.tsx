@@ -52,7 +52,7 @@ export function LoginForm({ name }) {
         }
       }
     } catch (error) {
-      toast.error("Invalid credentials.");
+      toast.error(error.response.data.message);
       console.error("Failed to fetch the user data with error: ", error);
     }
   };

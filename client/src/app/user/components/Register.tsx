@@ -3,11 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Label } from "../../../components/ui/label";
 import { Input } from "../../../components/ui/input";
 import { cn } from "../../../utils/cn";
-import {
-  IconBrandGithub,
-  IconBrandGoogle,
-  IconBrandOnlyfans,
-} from "@tabler/icons-react";
+import { IconBrandGithub, IconBrandGoogle } from "@tabler/icons-react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
@@ -24,9 +20,13 @@ export default function Register() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      await axios.post("/api/register-user", input, {
-        headers: { "Content-type": "application/json" },
-      });
+      await axios.post(
+        "/api/register-user",
+        { ...input, role: "Job Seeker" },
+        {
+          headers: { "Content-type": "application/json" },
+        }
+      );
       toast.success("Successfully registered the user.");
       navigate("/jobseeker-login");
     } catch (error) {

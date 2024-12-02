@@ -1,12 +1,14 @@
 import express from "express";
 import UserController from "../src/controllers/user.controller.js";
 import JobController from "../src/controllers/job.controller.js";
+import ApplicationController from "../src/controllers/application.controller.js";
 import { uploadFile } from "../src/middlewares/file-upload.middleware.js";
 
 const router = express.Router();
 
 const userController = new UserController();
 const jobController = new JobController();
+const applicationController = new ApplicationController();
 
 router.post("/register-user", userController.registerUser);
 router.post("/auth-user", userController.authUser);
@@ -21,5 +23,6 @@ router.post(
   uploadFile.single("resume"),
   jobController.postApplication
 );
+router.get("/get-job-application", applicationController.getApplication);
 
 export default router;

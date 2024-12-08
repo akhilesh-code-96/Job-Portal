@@ -13,6 +13,7 @@ app.use(
   cors({
     origin: [
       "https://job-portal-frontend-brown.vercel.app",
+      "https://67561187e257910ad1b162f6--hr-portal-frontend.netlify.app",
       "http://localhost:5173",
     ],
     methods: ["POST", "GET", "DELETE", "PUT"], // Specify allowed HTTP methods

@@ -9,11 +9,6 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [react()],
-    base: "./", // Adjust if deploying under a subdirectory
-    build: {
-      outDir: "dist",
-      sourcemap: true, // Optional: helpful for debugging production issues
-    },
     resolve: {
       alias: {
         "@": path.resolve(__dirname, "./src"),

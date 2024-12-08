@@ -11,7 +11,10 @@ const app = express();
 // congifure cors
 app.use(
   cors({
-    origin: "*",
+    origin: [
+      "https://job-portal-frontend-brown.vercel.app",
+      "http://localhost:5173",
+    ],
     methods: ["POST", "GET", "DELETE", "PUT"], // Specify allowed HTTP methods
     credentials: true,
   })
